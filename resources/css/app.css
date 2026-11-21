@@ -1,0 +1,50 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tampilan dasar */
+@layer base {
+    body {
+        font-family: 'Figtree', sans-serif;
+        background-color: #f1f5f9;
+        color: #1e293b;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+/* Komponen dashboard */
+@layer components {
+    .dashboard-card {
+        @apply rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-blue-300;
+    }
+
+    .dashboard-title {
+        @apply text-2xl font-extrabold tracking-tight text-slate-800;
+    }
+
+    .dashboard-subtitle {
+        @apply mt-2 text-sm text-slate-500;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700;
+    }
+
+    .form-input {
+        @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 10px;
+}
