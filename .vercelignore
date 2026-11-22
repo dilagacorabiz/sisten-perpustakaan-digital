@@ -1,0 +1,10 @@
+.env
+.env.production
+.env.backup
+/.git
+/.vercel
+/node_modules
+/vendor
+/tests
+/modul2
+/public/hot
