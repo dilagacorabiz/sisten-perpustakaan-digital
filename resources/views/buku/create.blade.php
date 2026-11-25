@@ -74,22 +74,24 @@
                         Kategori Buku
                     </label>
 
-                    <select
-                        name="kategori_id"
-                        required
-                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                    >
-                        <option value="">-- Pilih Kategori --</option>
+                   
+<select
+    name="kategori_id"
+    required
+    class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+>
+    <option value="">-- Pilih Kategori --</option>
 
-                        @foreach ($kategoris as $kategori)
-                            <option
-                                value="{{ $kategori->id }}"
-                                {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}
-                            >
-                                {{ $kategori->nama }}
-                            </option>
-                        @endforeach
-                    </select>
+    @foreach ($kategoris as $kategori)
+        <option
+            value="{{ $kategori->id }}"
+            {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}
+        >
+            {{ $kategori->nama }}
+        </option>
+    @endforeach
+</select>
+
                 </div>
 
                 <div>

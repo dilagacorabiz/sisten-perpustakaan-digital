@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BukuCrudController extends Controller
 {
@@ -82,9 +81,8 @@ public function store(Request $request)
             ->with('success', 'Buku berhasil dihapus.');
     }
 
-    // PENGUJIAN SQL INJECTION MODUL 6 (A2)
-
-public function cariRentan(Request $request)
+   // PENGUJIAN SQL INJECTION MODUL 6 (A2)
+  public function cariRentan(Request $request)
 {
     $judul = $request->query('judul');
 

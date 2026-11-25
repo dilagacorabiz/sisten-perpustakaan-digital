@@ -92,7 +92,7 @@ class LoanController extends Controller
         'buku'
     ])->findOrFail($id);
 
-    Gate::authorize('view', $peminjaman);
+    // Gate::authorize('view', $peminjaman);
 
     return view('loans.show', compact('peminjaman'));
 }

@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -15,26 +14,32 @@ Route::get('/', function () {
 // SEMUA ROUTE YANG MEMERLUKAN LOGIN
 Route::middleware(['auth'])->group(function () {
 
+    // =====================================
     // REDIRECT DASHBOARD SESUAI ROLE
-Route::get('/dashboard', function () {
+    // =====================================
 
-    $user = auth()->user();
+    // A4 - Pengujian IDOR (sementara rentan)
 
-    if ($user->hasRole('admin')) {
-        return redirect()->route('admin.dashboard');
-    }
+    Route::get('/dashboard', function () {
 
-    if ($user->hasRole('petugas')) {
-        return redirect()->route('petugas.dashboard');
-    }
+        $user = auth()->user();
 
-    if ($user->hasRole('siswa')) {
-        return redirect()->route('siswa.dashboard');
-    }
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        }
 
-    abort(403, 'Role pengguna belum ditentukan.');
+        if ($user->hasRole('petugas')) {
+            return redirect()->route('petugas.dashboard');
+        }
 
-})->name('dashboard');
+        if ($user->hasRole('siswa')) {
+            return redirect()->route('siswa.dashboard');
+        }
+
+        abort(403, 'Role pengguna belum ditentukan.');
+
+    })->name('dashboard');
+
 
     // =====================================
     // DASHBOARD ADMIN
@@ -68,25 +73,31 @@ Route::get('/dashboard', function () {
 
 
     // =====================================
+    // PENGUJIAN SQL INJECTION (A2)
+    // =====================================
+
+    Route::get('/buku-cari', [BukuCrudController::class, 'cariRentan'])
+        ->name('buku.cari.rentan');
+
+
+    // =====================================
     // DATA BUKU
     // ADMIN, PETUGAS, SISWA
     // =====================================
-
-    // =====================================
-// PENGUJIAN SQL INJECTION (A2)
-// =====================================
-
-Route::get('/buku-cari', [BukuCrudController::class, 'cariRentan'])
-    ->name('buku.cari.rentan');
 
     Route::get('/books', [BukuCrudController::class, 'index'])
         ->middleware('permission:lihat-daftar-buku')
         ->name('books.index');
 
 
-    // ROUTE CREATE HARUS SEBELUM ROUTE DETAIL
+    // =====================================
+    // KELOLA BUKU
+    // ADMIN DAN PETUGAS
+    // =====================================
 
     Route::middleware('can:kelola-buku')->group(function () {
+
+
 
         Route::get('/books/create', [BukuCrudController::class, 'create'])
             ->name('books.create');
@@ -103,9 +114,17 @@ Route::get('/buku-cari', [BukuCrudController::class, 'cariRentan'])
         Route::delete('/books/{book}', [BukuCrudController::class, 'destroy'])
             ->name('books.destroy');
 
-        // A3 - Route penghapusan rentan
+        // A3 - ROUTE RENTAN (SEMENTARA)
+// Route::get('/buku/{book}/hapus', [BukuCrudController::class, 'destroy'])
+//     ->name('books.hapus.rentan');
 
     });
+
+
+    // =====================================
+    // DETAIL BUKU
+    // ADMIN, PETUGAS, SISWA
+    // =====================================
 
     Route::get('/books/{book}', [BukuCrudController::class, 'show'])
         ->middleware('permission:lihat-daftar-buku')
@@ -196,11 +215,11 @@ Route::get('/buku-cari', [BukuCrudController::class, 'cariRentan'])
     // AKSES DIPERIKSA OLEH LOAN POLICY
     // =====================================
 
+    Route::get('/peminjaman/{id}', [LoanController::class, 'show'])
+        ->name('peminjaman.show.rentan');
+
     Route::get('/loans/{loan}', [LoanController::class, 'show'])
         ->name('loans.show');
-
-        
-
 
     // =====================================
     // PROFIL PENGGUNA
@@ -220,8 +239,6 @@ Route::get('/buku-cari', [BukuCrudController::class, 'cariRentan'])
 
 });
 
-Route::get('/test-error', function () {
-    throw new \RuntimeException('Pengujian keamanan Modul 6');
-});
+
 // AUTHENTICATION ROUTES
 require __DIR__.'/auth.php';

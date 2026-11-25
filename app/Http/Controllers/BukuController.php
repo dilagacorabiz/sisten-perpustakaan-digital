@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
